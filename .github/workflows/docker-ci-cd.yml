@@ -1,0 +1,55 @@
+name: Github Actions CICD
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Install sshpass and openssh-client
+        run: sudo apt-get install -y sshpass openssh-client
+
+      - name: Reset Git repository and pull latest changes
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: cd ~/valhalla; git reset --hard HEAD; git pull origin main; echo "${{ secrets.PASSWORD }}"
+
+      - name: Create and start Docker Containers
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: cd ~/valhalla; echo "${{ secrets.PASSWORD }}" | sudo -S -u "${{ secrets.USERNAME }}" docker compose up --build -d
+
+      - name: Collect static files
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: cd ~/valhalla; echo "${{ secrets.PASSWORD }}" | sudo -S -u "${{ secrets.USERNAME }}" docker compose exec -T django_app python manage.py collectstatic --noinput
+
+      - name: Run Django migrations
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: cd ~/valhalla; echo "${{ secrets.PASSWORD }}" | sudo -S -u "${{ secrets.USERNAME }}" docker compose exec -T django_app python manage.py migrate
