@@ -20,8 +20,8 @@ services:
     image: postgres:latest
     env_file:
       - .env
-    expose:
-      - "5433"
+    ports:
+      - "5433:5433"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
