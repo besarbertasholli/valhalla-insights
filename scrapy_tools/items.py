@@ -16,3 +16,12 @@ class NorsemenCharacterItem(scrapy.Item):
     actor_image_url = scrapy.Field()
     details_url = scrapy.Field()
     actor_description = scrapy.Field()
+
+
+class VikingsPlayerItem(scrapy.Item):
+    name = scrapy.Field()
+    team_number = scrapy.Field()
+    team_position = scrapy.Field()
+    age = scrapy.Field()
+    college = scrapy.Field()
+    details_url = scrapy.Field()
