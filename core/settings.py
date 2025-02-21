@@ -63,7 +63,7 @@ DATABASES = {
         "USER": os.environ.get("POSTGRES_USER", ""),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", ""),
         "HOST": "valhalla_database",
-        "PORT": "5433",
+        "PORT": "5432",
     }
 }
 
