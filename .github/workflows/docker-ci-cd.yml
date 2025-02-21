@@ -25,7 +25,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd ~/valhalla; git reset --hard HEAD; git pull origin main; echo "${{ secrets.PASSWORD }}"
+          script: cd ~/valhalla-insights; git reset --hard HEAD; git pull origin main; echo "${{ secrets.PASSWORD }}"
 
       - name: Create and start Docker Containers
         uses: appleboy/ssh-action@v1.2.0
@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd ~/valhalla; echo "${{ secrets.PASSWORD }}" | sudo -S -u "${{ secrets.USERNAME }}" docker compose up --build -d
+          script: cd ~/valhalla-insights; echo "${{ secrets.PASSWORD }}" | sudo -S -u "${{ secrets.USERNAME }}" docker compose up --build -d
 
       - name: Collect static files
         uses: appleboy/ssh-action@v1.2.0
@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd ~/valhalla; echo "${{ secrets.PASSWORD }}" | sudo -S -u "${{ secrets.USERNAME }}" docker compose exec -T django_app python manage.py collectstatic --noinput
+          script: cd ~/valhalla-insights; echo "${{ secrets.PASSWORD }}" | sudo -S -u "${{ secrets.USERNAME }}" docker compose exec -T django_app python manage.py collectstatic --noinput
 
       - name: Run Django migrations
         uses: appleboy/ssh-action@v1.2.0
@@ -52,4 +52,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: cd ~/valhalla; echo "${{ secrets.PASSWORD }}" | sudo -S -u "${{ secrets.USERNAME }}" docker compose exec -T django_app python manage.py migrate
+          script: cd ~/valhalla-insights; echo "${{ secrets.PASSWORD }}" | sudo -S -u "${{ secrets.USERNAME }}" docker compose exec -T django_app python manage.py migrate
