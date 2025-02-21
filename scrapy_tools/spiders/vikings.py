@@ -3,7 +3,7 @@ from scrapy_tools.items import VikingsCharacterItem
 
 class VikingsSpider(ScrapySpider):
     name = "vikings"
-    allowed_domains = ["history.com"]
+    allowed_domains = ["history.com", "history.de"]
     start_urls = ["https://www.history.com/shows/vikings/cast"]
     custom_settings = {
         "ITEM_PIPELINES": {
