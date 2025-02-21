@@ -1,0 +1,5 @@
+# Vikings spider every 2 hours
+0 */2 * * * cd /scrapy_tools && scrapy crawl vikings >> /var/log/scrapy_vikings.log 2>&1
+
+# Norsemen spider every 3 hours
+0 */3 * * * cd /scrapy_tools && scrapy crawl norsemen >> /var/log/scrapy_norsemen.log 2>&1
