@@ -6,7 +6,7 @@ This repository contains the code and data for the Valhalla Insights web applica
 
 ## Deployment  
 
-The application is deployed on a dedicated personal server and can be accessed here:  
+The application is deployed on a personal dedicated server I had available and can be accessed here:  
 🔗 [http://68.183.215.78:8080/](http://68.183.215.78:8080/)  
 
 ## End-to-End Pipeline  
@@ -17,15 +17,16 @@ The project follows a structured pipeline to ensure data accuracy and reliabilit
    - Data is scraped from multiple sources using Scrapy.  
    - Headers, and user-agent rotation are used to prevent blocking.  
    - The scraper handles redirects and retries on failure.
+   - The pipeline handles missing data from the sites and has cases of fallback options
 
 2. **Data Processing & Storage**  
    - Raw scraped data is cleaned, structured, and stored in a PostgreSQL database through the Django ORM.  
-   - Django Migrations are included to recreate database tables and load data efficiently.
+   - Django Migrations are included to recreate database tables.
    - If a record already exists, it is updated instead of duplicated.
 
 3. **Web Application**  
    - A Django-based web application provides an interface for browsing and searching characters.  
-   - Bootstrap is used for responsive design.  
+   - Bootstrap is used for quick and responsive design.  
 
 4. **Scheduling & Updates**  
    - Scraping jobs are scheduled via `cron`
@@ -38,6 +39,7 @@ The project follows a structured pipeline to ensure data accuracy and reliabilit
 ## Repository Contents  
 
 🔹 **Scraped Data:** Sample output files containing extracted information, put in the data folder.
+🔹 **Scraping Pipeline:** Scraping classes and data pipelines.
 🔹 **Database Migrations:** Django migration files to recreate database tables.  
 🔹 **Web Application Code:** Django project with all required dependencies.  
 🔹 **Setup Instructions:** A detailed README to guide deployment and usage.  
