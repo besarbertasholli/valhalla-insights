@@ -1,0 +1,51 @@
+services:
+  django_app:
+    container_name: django_app
+    env_file:
+      - .env
+    build:
+      context: .
+    command: gunicorn core.wsgi --bind 0.0.0.0:8000 --timeout 120 --workers 3 --reload
+    links:
+      - "database:database"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/application
+    depends_on:
+      - database
+    networks:
+      - djangonetwork
+
+  database:
+    container_name: database
+    image: postgres:latest
+    env_file:
+      - .env
+    expose:
+      - "5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - djangonetwork
+
+  scrapy_scheduler:
+    container_name: scrapy_scheduler
+    build: ./scrapy_tools
+    env_file:
+      - .env
+    depends_on:
+      - django_app
+      - database
+    volumes:
+      - .:/scrapy_tools
+    entrypoint: ["/bin/sh", "-c", "rm -f /var/run/crond.pid && cron -f"]
+    networks:
+      - djangonetwork
+
+volumes:
+  pgdata:
+
+networks:
+  djangonetwork:
+    driver: bridge
