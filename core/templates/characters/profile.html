@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ character.name }}{% if character.actor %}({{ character.actor.name }}){% endif %} of {{character.tv_series}}{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        {% if character.image_url %}
+        <div class="col-md-4">
+            <!-- Character Image -->
+             <img src="{{ character.image_url }}" alt="{{ character.name }}" class="img-fluid rounded mb-3">
+        </div>
+        {% endif %}
+        <div class="col-md-8">
+            <!-- Character Details -->
+            <h1 class="display-4">{{ character.name }}</h1>
+            <h3 class="text-muted">{{ character.tv_series }}</h3>
+            {% if character.description %}
+            <p><strong>Description:</strong> {{ character.description }}</p>
+            {% endif %}
+            
+            <!-- Actor Details -->
+            <div class="actor-info">
+                {% if character.actor %}
+                    <h4>Actor</h4>
+                    <p><strong>Name:</strong> {{ character.actor.name }}</p>
+                    {% if character.actor.description %}
+                    <p><strong>Bio:</strong> {{ character.actor.description }}</p>
+                    {% endif %}
+                    {% if character.actor.image_url %}
+                    <p><strong>Image:</strong></p>
+                    <img src="{{ character.actor.image_url }}" alt="{{ character.actor.name }}" class="img-thumbnail" width="200">
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'character_list_view' %}" class="btn btn-primary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

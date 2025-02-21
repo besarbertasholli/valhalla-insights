@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.postgres.indexes import GinIndex
-from django.contrib.postgres.search import SearchVectorField
+from django.utils.text import slugify
 
 class Actor(models.Model):
     name = models.CharField(max_length=255, unique=True, db_index=True)
@@ -20,13 +19,24 @@ class Character(models.Model):
         choices=[("Vikings", "Vikings"), ("Norsemen", "Norsemen")],
         db_index=True,
     )
-    search_vector = SearchVectorField(null=True)
+    slug = models.SlugField(unique=True, blank=True)
 
     class Meta:
         unique_together = ("name", "tv_series")
-        indexes = [
-            GinIndex(fields=["search_vector"]),
-        ]
 
     def __str__(self):
-        return f"{self.name}({self.actor.name}) of {self.tv_series}"
+        if self.actor:
+            return f"{self.name}({self.actor.name}) of {self.tv_series}"
+        else:
+            return f"{self.name} of {self.tv_series}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(f"{self.name}-{self.tv_series}")
+            self.slug = base_slug
+
+            count = 1
+            while Character.objects.filter(slug=self.slug).exists():
+                self.slug = f"{base_slug}-{count}"
+                count += 1
+        super().save(*args, **kwargs)

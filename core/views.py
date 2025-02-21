@@ -1,21 +1,20 @@
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-from django.shortcuts import render
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
 from .models import Character
 
-def characters_list(request):
+def character_list(request):
     search_query = request.GET.get("q", "")
 
     if search_query:
-        query = SearchQuery(search_query)
-        characters = (
-            Character.objects.annotate(
-                rank=SearchRank(SearchVector("name", "description"), query)
-            )
-            .filter(search_vector=query)
-            .select_related("actor")
-            .order_by("-rank")
-        )
+        characters = Character.objects.filter(
+            Q(name__icontains=search_query) |
+            Q(actor__name__icontains=search_query)
+        ).select_related("actor")
     else:
         characters = Character.objects.select_related("actor")
 
     return render(request, "characters/list.html", {"characters": characters})
+
+def character_profile(request, slug):
+    character = get_object_or_404(Character, slug=slug)
+    return render(request, "characters/profile.html", {"character": character})
