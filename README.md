@@ -16,8 +16,8 @@ The project follows a structured pipeline to ensure data accuracy and reliabilit
 1. **Web Scraping**  
    - Data is scraped from multiple sources using Scrapy.  
    - Headers, and user-agent rotation are used to prevent blocking.  
-   - The scraper handles redirects and retries on failure.
-   - The pipeline handles missing data from the sites and has cases of fallback options
+   - The scraper handles redirects and retries on failure.  
+   - The pipeline handles missing data from the sites and has cases of fallback options.  
 
 2. **Data Processing & Storage**  
    - Raw scraped data is cleaned, structured, and stored in a PostgreSQL database through the Django ORM.  
@@ -29,17 +29,17 @@ The project follows a structured pipeline to ensure data accuracy and reliabilit
    - Bootstrap is used for quick and responsive design.  
 
 4. **Scheduling & Updates**  
-   - Scraping jobs are scheduled via `cron`
+   - Scraping jobs are scheduled via `cron`  
    - Data updates periodically to ensure freshness.  
 
 5. **Error Handling & Robustness**  
    - Logging and monitoring track scraping failures and data inconsistencies.  
-   - Failed requests are retried 
+   - Failed requests are retried  
 
 ## Repository Contents  
 
-🔹 **Scraped Data:** Sample output files containing extracted information, put in the data folder.
-🔹 **Scraping Pipeline:** Scraping classes and data pipelines.
+🔹 **Scraped Data:** Sample output files containing extracted information, put in the data folder.  
+🔹 **Scraping Pipeline:** Scraping classes and data pipelines.  
 🔹 **Database Migrations:** Django migration files to recreate database tables.  
 🔹 **Web Application Code:** Django project with all required dependencies.  
 🔹 **Setup Instructions:** A detailed README to guide deployment and usage.  
