@@ -4,7 +4,7 @@ ENV PYTHONBUFFERED=1
 
 WORKDIR /scrapy_tools
 
-RUN apt-get update && apt-get install -y cron && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y cron nano && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt
 
