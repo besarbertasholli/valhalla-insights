@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Player List{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-md-6">
+        <h2>Player List</h2>
+    </div>
+    <div class="col-md-6">
+        <form method="GET" action="" class="d-flex">
+            <input type="text" name="q" value="{{request.GET.q}}" class="form-control me-2" placeholder="Search by player name...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Image</th>
+            <th>Player</th>
+            <th>#</th>
+            <th>Position</th>
+            <th>Height</th>
+            <th>Weight</th>
+            <th>Age</th>
+            <th>Experience</th>
+            <th>College</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for player in players %}
+        <tr>
+            <td>
+                {% if player.image_url %}
+                <img src="{{ player.image_url }}" alt="Player Image" width="80">
+                {% else %}
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Empty Image" width="80">
+                {% endif %}
+            </td>
+            <td class="align-middle">{{ player.name }}</td>
+            <td class="align-middle">{{ player.squad_number }}</td>
+            <td class="align-middle">{{ player.position }}</td>
+            <td class="align-middle">{{ player.height }}</td>
+            <td class="align-middle">{{ player.weight }} lbs</td>
+            <td class="align-middle">{{ player.age }}</td>
+            <td class="align-middle">{{ player.years_experience }}</td>
+            <td class="align-middle">{{ player.college }}</td>
+            <td class="align-middle"><a href="{% url 'player_profile_view' player.slug %}">See more</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">No players found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

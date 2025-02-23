@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.text import slugify
 
 class Player(models.Model):
     name = models.CharField(max_length=255, unique=True, db_index=True)
@@ -14,9 +14,21 @@ class Player(models.Model):
     playing_status = models.CharField(max_length=50, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True)
 
     def __str__(self):
         return f"{self.name} ({self.position})"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(f"{self.name}-{self.position}")
+            self.slug = base_slug
+
+            count = 1
+            while Player.objects.filter(slug=self.slug).exists():
+                self.slug = f"{base_slug}-{count}"
+                count += 1
+        super().save(*args, **kwargs)
 
 
 class SeasonStats(models.Model):
