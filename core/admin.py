@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Actor, Character, Player
+from .models import Actor, Character, Player, SeasonStats
 
 @admin.register(Actor)
 class ActorAdmin(admin.ModelAdmin):
@@ -15,6 +15,12 @@ class CharacterAdmin(admin.ModelAdmin):
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ("name", "position", "college")
+    list_display = ("name", "position", "age", "years_experience", "college")
     search_fields = ("name",)
     list_filter = ("position", "college",)
+
+@admin.register(SeasonStats)
+class SeasonStatsAdmin(admin.ModelAdmin):
+    list_display = ("player", "season", "team")
+    search_fields = ("player__name",)
+    list_filter = ("team",)

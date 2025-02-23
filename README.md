@@ -41,8 +41,11 @@ The project follows a structured pipeline to ensure data accuracy and reliabilit
 🔹 **Scraped Data:** Sample output files containing extracted information, put in the data folder.  
 🔹 **Scraping Pipeline:** Scraping classes and data pipelines.  
 🔹 **Database Migrations:** Django migration files to recreate database tables.  
-🔹 **Web Application Code:** Django project with all required dependencies.  
+🔹 **Web Application Code:** A frontend with list and detail pages for Characters and Players 
+🔹 **Django Admin:** Django project with all required dependencies.  
 🔹 **Setup Instructions:** A detailed README to guide deployment and usage.  
+🔹 **CI/CD Pipeline:** A simple pipeline to deploy the project to live server on every push.  
+🔹 **Cron setup:** The setup that schedules the scrapers on specific timelines.  
 
 ## Setup & Installation  
 
@@ -66,6 +69,6 @@ The project follows a structured pipeline to ensure data accuracy and reliabilit
    ```
 
 4. The scrapy scheduler is now already started for 3 spiders:
-    - [Vikings](https://www.history.com/shows/vikings/cast) scheduler running every 2 hours
-    - [Norsemen](https://www.imdb.com/title/tt5905354/)  scheduler running every 3 hours
-    - [Vikings NFL](https://www.vikings.com/team/players-roster/) scheduler running every day at midnight
+    - [Vikings](https://www.history.com/shows/vikings/cast) scheduler running every day at midnight
+    - [Norsemen](https://www.imdb.com/title/tt5905354/)  scheduler running every day at 1 AM
+    - [Vikings NFL](https://www.vikings.com/team/players-roster/) scheduler running every day at 2 AM

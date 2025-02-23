@@ -2,14 +2,16 @@ from django.db import models
 
 
 class Player(models.Model):
-    name = models.CharField(max_length=255, db_index=True)
-    position = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(max_length=255, unique=True, db_index=True)
     team = models.CharField(max_length=100, default="Minnesota Vikings")
-    years_experience = models.PositiveIntegerField(blank=True, null=True)
+    squad_number = models.PositiveIntegerField(blank=True, null=True)
+    position = models.CharField(max_length=100, blank=True, null=True)
     height = models.CharField(max_length=50, blank=True, null=True)
     weight = models.PositiveIntegerField(blank=True, null=True)  # lbs
     age = models.PositiveIntegerField(blank=True, null=True)
+    years_experience = models.CharField(max_length=50, blank=True, null=True)
     college = models.CharField(max_length=255, blank=True, null=True)
+    playing_status = models.CharField(max_length=50, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
 

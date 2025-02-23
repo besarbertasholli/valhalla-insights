@@ -70,7 +70,8 @@ DATABASES = {
 ALLOWED_HOSTS = [
     "[::]",
     "68.183.215.78",
-    "localhost"
+    "localhost",
+    "127.0.0.1",
 ]
 
 
