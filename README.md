@@ -41,8 +41,8 @@ The project follows a structured pipeline to ensure data accuracy and reliabilit
 🔹 **Scraped Data:** Sample output files containing extracted information, put in the data folder.  
 🔹 **Scraping Pipeline:** Scraping classes and data pipelines.  
 🔹 **Database Migrations:** Django migration files to recreate database tables.  
-🔹 **Web Application Code:** A frontend with list and detail pages for Characters and Players 
-🔹 **Django Admin:** Django project with all required dependencies.  
+🔹 **Web Application Code:** A frontend with list and detail pages for Characters and Players.  
+🔹 **Django Admin:** Django project to manage the Character and Player models.  
 🔹 **Setup Instructions:** A detailed README to guide deployment and usage.  
 🔹 **CI/CD Pipeline:** A simple pipeline to deploy the project to live server on every push.  
 🔹 **Cron setup:** The setup that schedules the scrapers on specific timelines.  
