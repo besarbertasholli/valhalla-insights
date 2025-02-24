@@ -40,14 +40,20 @@
                 <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Empty Image" width="80">
                 {% endif %}
             </td>
-            <td class="align-middle">{{ player.squad_number }}</td>
+            <td class="align-middle">{{ player.squad_number|default:"N/A"|default_if_none:"N/A" }}</td>
             <td class="align-middle">{{ player.name }}</td>
             <td class="align-middle">{{ player.position }}</td>
-            <td class="align-middle">{{ player.height }}</td>
-            <td class="align-middle">{{ player.weight }} lbs</td>
-            <td class="align-middle">{{ player.age }}</td>
-            <td class="align-middle">{{ player.years_experience }}</td>
-            <td class="align-middle">{{ player.college }}</td>
+            <td class="align-middle">{{ player.height|default:"N/A"|default_if_none:"N/A" }}</td>
+            <td class="align-middle">{% if player.weight %}{{ player.weight }} lbs{% else %}N/A{% endif %}</td>
+            <td class="align-middle">{{ player.age|default:"N/A"|default_if_none:"N/A" }}</td>
+            <td class="align-middle">
+                {% if player.years_experience|floatformat:0 %}
+                    {{ player.years_experience }} {% if player.years_experience == '1' %}year{% else %}years{% endif %}
+                {% else %}
+                    {{ player.years_experience }}
+                {% endif %}
+            </td>
+            <td class="align-middle">{{ player.college|default:"N/A" }}</td>
             <td class="align-middle"><a href="{% url 'player_profile_view' player.slug %}">See more</a></td>
         </tr>
         {% empty %}
