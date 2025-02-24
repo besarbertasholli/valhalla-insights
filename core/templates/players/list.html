@@ -19,8 +19,8 @@
     <thead class="table-dark">
         <tr>
             <th>Image</th>
+            <th>Team #</th>
             <th>Player</th>
-            <th>#</th>
             <th>Position</th>
             <th>Height</th>
             <th>Weight</th>
@@ -40,8 +40,8 @@
                 <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Empty Image" width="80">
                 {% endif %}
             </td>
-            <td class="align-middle">{{ player.name }}</td>
             <td class="align-middle">{{ player.squad_number }}</td>
+            <td class="align-middle">{{ player.name }}</td>
             <td class="align-middle">{{ player.position }}</td>
             <td class="align-middle">{{ player.height }}</td>
             <td class="align-middle">{{ player.weight }} lbs</td>
@@ -52,7 +52,7 @@
         </tr>
         {% empty %}
         <tr>
-            <td colspan="5" class="text-center">No players found.</td>
+            <td colspan="10" class="text-center">No players found.</td>
         </tr>
         {% endfor %}
     </tbody>

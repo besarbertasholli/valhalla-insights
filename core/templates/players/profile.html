@@ -20,22 +20,21 @@
             <p><strong>College:</strong> {{ player.college|default:"N/A" }}</p>
 
             {% if player.bio %}
-            <div class="mt-3">
+            <div class="mt-4">
                 <h4>Biography</h4>
-                <p>{{ player.bio }}</p>
+                <div>{{ player.bio|safe }}</div>
             </div>
             {% endif %}
         </div>
     </div>
 
-    <!-- Player Season Stats -->
+    <!-- Player 2021 Season Stats -->
     {% if player.season_stats.all %}
     <div class="mt-4">
-        <h3>Season Stats</h3>
+        <h3>2021 Season Stats</h3>
         <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th>Season</th>
                     <th>Team</th>
                     <th>Games Played</th>
                     <th>Games Started</th>
@@ -51,7 +50,6 @@
             <tbody>
                 {% for stat in player.season_stats.all %}
                 <tr>
-                    <td>{{ stat.season }}</td>
                     <td>{{ stat.team|default:"Minnesota Vikings" }}</td>
                     <td>{{ stat.games_played|default:0 }}</td>
                     <td>{{ stat.games_started|default:0 }}</td>

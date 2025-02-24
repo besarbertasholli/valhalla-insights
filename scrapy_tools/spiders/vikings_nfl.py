@@ -1,7 +1,5 @@
 import scrapy
 from scrapy_tools.items import VikingsPlayerItem
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from scrapy.http import HtmlResponse
 
 
@@ -16,14 +14,13 @@ class VikingsNFLSpider(scrapy.Spider):
     }
 
     def parse(self, response):
-        options = Options()
-        options.add_argument("--headless")
-        driver = webdriver.Chrome(options=options)
-        driver.get(response.url)
-        page_source = driver.page_source
-        driver.quit()
-
-        response = HtmlResponse(url=response.url, body=page_source, encoding="utf-8", request=response.request)
+        modified_body = response.text.replace('<html lang="en-US" dir="ltr" />', '<html lang="en-US">')
+        response = HtmlResponse(
+            url=response.url,
+            body=modified_body,
+            encoding="utf-8",
+            request=response.request,
+        )
 
         for player in response.css(".nfl-o-roster table tbody tr"):
             item = VikingsPlayerItem()
@@ -54,16 +51,14 @@ class VikingsNFLSpider(scrapy.Spider):
         item = response.meta["item"]
         item["details_url"] = response.url
 
-        options = Options()
-        options.add_argument("--headless")
-        driver = webdriver.Chrome(options=options)
-        driver.get(response.url)
-        page_source = driver.page_source
-        driver.quit()
+        modified_body = response.text.replace('<html lang="en-US" dir="ltr" />', '<html lang="en-US">')
+        response = HtmlResponse(
+            url=response.url,
+            body=modified_body,
+            encoding="utf-8"
+        )
 
-        response = HtmlResponse(url=response.url, body=page_source, encoding="utf-8")
-
-        item["bio"] = response.css(".nfl-c-biography .nfl-c-body-part:nth-child(2) ul li::text").getall()
+        item["bio"] = response.css(".nfl-c-biography .nfl-c-body-part:nth-child(2) ul").get()
 
         for player_stats in response.css(".nfl-t-stats--table table[summary='Career Stats'] tbody tr"):
             season = player_stats.css("td:first-child::text").get()

@@ -18,6 +18,9 @@ COPY crontab /etc/cron.d/scrapy-cron
 
 RUN chmod 0644 /etc/cron.d/scrapy-cron && crontab /etc/cron.d/scrapy-cron
 
-RUN mkdir -p /var/log && touch /var/log/scrapy_vikings.log && touch /var/log/scrapy_norsemen.log && touch /var/log/scrapy_vikings_nfl.log
+RUN mkdir -p /var/log && \
+    touch /var/log/scrapy_vikings.log && \
+    touch /var/log/scrapy_norsemen.log && \
+    touch /var/log/scrapy_vikings_nfl.log
 
 CMD ["sh", "-c", "cron -f"]
